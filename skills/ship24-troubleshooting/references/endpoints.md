@@ -341,7 +341,7 @@ This endpoint allows to modify an existing `Tracker` matching with the given `t
 
 This endpoint will return the `tracking` result corresponding to the tracking number provided as a parameter. 
 
-The `tracking` object is detailed in the [SCHEMAS](/schemas/tracking) section. 
+The `tracking` object is detailed in the [SCHEMAS](https://docs.ship24.com/tracking-api-reference/#/schemas/tracking) section. 
 
 Unlike the `/v1/trackers/track` endpoint, a **`Tracker`** **must first be created on this tracking number before using this endpoint.** As a tracking number is not unique, the endpoint may return multiple `trackings` associated with different `Trackers`.
 
@@ -368,7 +368,7 @@ No request body.
 
 This endpoint return the `Tracking` results of an existing `Tracker` matching with the given trackerId. As trackerId are unique, the `Trackings` array will always have only one item. 
 
-The `tracking` object is detailed in the [SCHEMAS](/schemas/tracking) section.
+The `tracking` object is detailed in the [SCHEMAS](https://docs.ship24.com/tracking-api-reference/#/schemas/tracking) section.
 
 Unlike the `/v1/trackers/track` endpoint, a **`Tracker`** **must first be created on this tracking number before using this endpoint.** As a tracking number is not unique, the endpoint may return multiple `trackings` associated with different `Trackers`.
 
@@ -419,7 +419,7 @@ No request body.
 
 This endpoint will return the `tracking` corresponding to the tracking number provided as a parameter. 
 
-The `tracking` object is detailed in the [SCHEMAS](/schemas/tracking) section.
+The `tracking` object is detailed in the [SCHEMAS](https://docs.ship24.com/tracking-api-reference/#/schemas/tracking) section.
 
 For better accuracy, we strongly advise to provide extra information such as the origin country, destination postcode & country, and the shipping date.
 

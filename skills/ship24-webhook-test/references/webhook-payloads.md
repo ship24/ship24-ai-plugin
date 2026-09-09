@@ -5,7 +5,7 @@
 ### Receive webhooks - Tracking results (`receive-webhooks-tracking-results`)
 
 > This endpoint is **NOT** part of the Ship24 API but rather **has to be implemented on your side** in order to receive webhook messages.
-Ship24 will be pushing tracking results to your endpoint using a `trackings` array containing `tracking` objects. The `tracking` object is detailed below as well as in [Schemas > Tracking](/schemas/tracking). [Learn how to set up and use webhooks](https://docs.ship24.com/webhooks/overview).
+Ship24 will be pushing tracking results to your endpoint using a `trackings` array containing `tracking` objects. The `tracking` object is detailed below as well as in [Schemas > Tracking](https://docs.ship24.com/tracking-api-reference/#/schemas/tracking). [Learn how to set up and use webhooks](https://docs.ship24.com/webhooks/overview).
 
 > Note: `shipment.delivery.aiPredictiveDeliveryDate` is an [optional field](https://docs.ship24.com/data-format#optional-fields-add-on-options) and is absent from the payload unless you subscribed to its related add-on option.
 

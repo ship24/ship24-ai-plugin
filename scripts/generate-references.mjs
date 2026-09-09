@@ -89,8 +89,15 @@ const ASSET_TARGETS = [
   },
 ];
 
-function demoteHeadings(text) {
-  return text.replace(/^(#{1,5})(\s)/gm, '#$1$2');
+const API_REFERENCE_URL = 'https://docs.ship24.com/tracking-api-reference/#';
+
+// Spec descriptions link to Stoplight routes such as /schemas/tracking, which only resolve on the docs site.
+function absolutizeDocsLinks(text) {
+  return text.replace(/\]\(\/(schemas|operations|webhooks)\//g, `](${API_REFERENCE_URL}/$1/`);
+}
+
+function normalizeDescription(text) {
+  return absolutizeDocsLinks(text.replace(/^(#{1,5})(\s)/gm, '#$1$2'));
 }
 
 function fieldRows(fields) {
@@ -98,7 +105,7 @@ function fieldRows(fields) {
     field.deprecated ? `${field.name} (deprecated)` : field.name,
     field.type,
     field.required ? 'yes' : 'no',
-    field.description,
+    absolutizeDocsLinks(field.description ?? ''),
   ]);
 }
 
@@ -243,7 +250,7 @@ function buildEndpointsMd(ctx) {
     lines.push(`**${op.summary}** (\`${op.operationId}\`)`);
     lines.push('');
     if (op.description) {
-      lines.push(demoteHeadings(op.description));
+      lines.push(normalizeDescription(op.description));
       lines.push('');
     }
     lines.push('**Parameters**');
@@ -289,7 +296,7 @@ function renderSchemaSection(doc, name, schema) {
   const lines = [`### \`${name}\``, ''];
 
   if (schema.description) {
-    lines.push(demoteHeadings(schema.description));
+    lines.push(normalizeDescription(schema.description));
     lines.push('');
   }
 
@@ -491,7 +498,7 @@ function buildWebhookPayloadsMd(ctx) {
     lines.push(`### ${payload.summary || payload.operationId} (\`${payload.operationId}\`)`);
     lines.push('');
     if (payload.description) {
-      lines.push(demoteHeadings(payload.description));
+      lines.push(normalizeDescription(payload.description));
       lines.push('');
     }
     lines.push(`Topic: \`${payload.topic}\`.`);
