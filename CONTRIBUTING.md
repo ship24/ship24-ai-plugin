@@ -74,7 +74,7 @@ Maintainers only.
 
 1. Add a `## [X.Y.Z] - YYYY-MM-DD` section to `CHANGELOG.md`.
 2. `pnpm bump patch|minor|major`, then `pnpm check`.
-3. Commit as `chore: release vX.Y.Z`, tag `vX.Y.Z`, push with `--follow-tags`. The `release` workflow
+3. Commit as `chore: release vX.Y.Z`, tag with `git tag -a vX.Y.Z -m vX.Y.Z` (annotated, so that `git push --follow-tags` pushes it), then `git push --follow-tags`. The `release` workflow
    creates the GitHub Release.
 
 Version lives in `package.json` and is mirrored into every manifest by the bump script; CI fails when they

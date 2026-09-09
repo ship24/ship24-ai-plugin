@@ -1,6 +1,6 @@
 {
   "name": "ship24",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Ship24 shipment tracking for AI coding agents: skills to integrate the Ship24 Tracking API, build webhook receivers, look up courier codes, map tracking statuses and troubleshoot errors, plus the Ship24 Tracking MCP server to track parcels live. Set SHIP24_API_KEY for live calls.",
   "mcpServers": {
     "ship24-tracking": {
