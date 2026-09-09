@@ -1,10 +1,13 @@
 import { readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import addFormats from 'ajv-formats';
 import Ajv2020 from 'ajv/dist/2020.js';
+import addFormats from 'ajv-formats';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
+const MCP_URL = 'https://api.ship24.com/mcp';
+// biome-ignore lint/suspicious/noTemplateCurlyInString: the manifests must contain this placeholder literally
+const KEY_HEADER = 'Bearer ${SHIP24_API_KEY}';
 
 const MANIFEST_FILES = {
   packageJson: 'package.json',
@@ -96,20 +99,20 @@ async function main() {
 
   if (docs.mcp) {
     const server = docs.mcp.mcpServers?.['ship24-tracking'];
-    if (server?.headers?.Authorization !== 'Bearer ${SHIP24_API_KEY}') {
-      fail('.mcp.json: ship24-tracking headers.Authorization must be "Bearer ${SHIP24_API_KEY}".');
+    if (server?.headers?.Authorization !== KEY_HEADER) {
+      fail(`.mcp.json: ship24-tracking headers.Authorization must be "${KEY_HEADER}".`);
     }
-    if (server?.url !== 'https://api.ship24.com/mcp') {
+    if (server?.url !== MCP_URL) {
       fail('.mcp.json: ship24-tracking url must be "https://api.ship24.com/mcp".');
     }
   }
 
   if (docs.mcpLower) {
     const server = docs.mcpLower.mcpServers?.['ship24-tracking'];
-    if (server?.headers?.Authorization !== 'Bearer ${SHIP24_API_KEY}') {
-      fail('mcp.json: ship24-tracking headers.Authorization must be "Bearer ${SHIP24_API_KEY}".');
+    if (server?.headers?.Authorization !== KEY_HEADER) {
+      fail(`mcp.json: ship24-tracking headers.Authorization must be "${KEY_HEADER}".`);
     }
-    if (server?.url !== 'https://api.ship24.com/mcp') {
+    if (server?.url !== MCP_URL) {
       fail('mcp.json: ship24-tracking url must be "https://api.ship24.com/mcp".');
     }
     if (server?.type !== 'streamable-http') {
@@ -141,14 +144,14 @@ async function main() {
       fail('.cursor-plugin/plugin.json: variables.properties.SHIP24_API_KEY must be declared.');
     }
     const server = docs.cursorPlugin.mcpServers?.['ship24-tracking'];
-    if (server?.url !== 'https://api.ship24.com/mcp') {
+    if (server?.url !== MCP_URL) {
       fail(
         '.cursor-plugin/plugin.json: mcpServers.ship24-tracking.url must be "https://api.ship24.com/mcp".',
       );
     }
-    if (server?.headers?.Authorization !== 'Bearer ${SHIP24_API_KEY}') {
+    if (server?.headers?.Authorization !== KEY_HEADER) {
       fail(
-        '.cursor-plugin/plugin.json: mcpServers.ship24-tracking headers.Authorization must be "Bearer ${SHIP24_API_KEY}".',
+        `.cursor-plugin/plugin.json: mcpServers.ship24-tracking headers.Authorization must be "${KEY_HEADER}".`,
       );
     }
   }

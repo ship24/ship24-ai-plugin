@@ -177,7 +177,7 @@ function renderRequestBody(doc, requestBody) {
   return { schemaName, fields, example: pickExample(mediaType) };
 }
 
-function renderResponses(doc, responses) {
+function renderResponses(responses) {
   if (!responses || typeof responses !== 'object') return [];
   return Object.entries(responses).map(([status, response]) => {
     const mediaType = pickMediaType(response?.content);
@@ -226,7 +226,7 @@ export function getOperations(doc) {
         tags: Array.isArray(operation.tags) ? operation.tags : [],
         parameters,
         requestBody: renderRequestBody(doc, operation.requestBody),
-        responses: renderResponses(doc, operation.responses),
+        responses: renderResponses(operation.responses),
       });
     }
   }
@@ -235,7 +235,7 @@ export function getOperations(doc) {
 }
 
 function flattenTrackingItemFields(doc, trackingsSchema) {
-  if (!trackingsSchema || !trackingsSchema.items) return [];
+  if (!trackingsSchema?.items) return [];
   return getSchemaFields(doc, trackingsSchema.items).map((field) => ({
     ...field,
     name: `trackings[].${field.name}`,
