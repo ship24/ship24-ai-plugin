@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm generate:check
+      - run: pnpm test
+      - run: pnpm lint:skills
+      - run: pnpm validate:skills
+      - run: pnpm validate:manifests
+      - name: Claude Code plugin validation
+        # Depends on installing the Claude Code CLI; kept advisory so a CLI packaging change never blocks the repo.
+        continue-on-error: true
+        run: |
+          npm install -g @anthropic-ai/claude-code@2.1.258
+          pnpm validate:claude
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --offline --no-progress --include-fragments --exclude-path node_modules "**/*.md"
+          fail: true

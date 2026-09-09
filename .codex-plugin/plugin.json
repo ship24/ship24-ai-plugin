@@ -1,0 +1,41 @@
+{
+  "name": "ship24",
+  "version": "0.1.0",
+  "description": "Ship24 shipment tracking for AI coding agents: skills to integrate the Ship24 Tracking API, build webhook receivers, look up courier codes, map tracking statuses and troubleshoot errors, plus the Ship24 Tracking MCP server to track parcels live. Set SHIP24_API_KEY for live calls.",
+  "author": {
+    "name": "Ship24",
+    "url": "https://www.ship24.com"
+  },
+  "homepage": "https://github.com/ship24/ship24-ai-plugin#readme",
+  "repository": "https://github.com/ship24/ship24-ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "ship24",
+    "tracking",
+    "shipment-tracking",
+    "courier",
+    "logistics",
+    "mcp"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Ship24",
+    "shortDescription": "Track shipments and integrate the Ship24 Tracking API",
+    "longDescription": "Ship24 shipment tracking for AI coding agents: skills to integrate the Ship24 Tracking API, build webhook receivers, look up courier codes, map tracking statuses and troubleshoot errors, plus the Ship24 Tracking MCP server to track parcels across 2,500+ carriers. Set SHIP24_API_KEY for live calls.",
+    "developerName": "Ship24",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "websiteURL": "https://www.ship24.com",
+    "privacyPolicyURL": "https://www.ship24.com/privacy-policy",
+    "termsOfServiceURL": "https://www.ship24.com/terms",
+    "defaultPrompt": [
+      "Track SHIP24_SAMPLE_DELIVERED_000 with Ship24 and summarize the delivery timeline.",
+      "Add Ship24 shipment tracking with webhooks to this project.",
+      "Which Ship24 courier code should I use for USPS, and does it need a postcode?"
+    ],
+    "logo": "./assets/logo.png",
+    "composerIcon": "./assets/logo.png",
+    "screenshots": []
+  }
+}

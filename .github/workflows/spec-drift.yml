@@ -1,0 +1,45 @@
+name: Spec drift
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # weekly, Monday 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Fetch the canonical spec and schema
+        run: |
+          curl -fsSL https://docs.ship24.com/assets/openapi/ship24-tracking-api.yaml \
+            -o spec/ship24-tracking-api.yaml
+          curl -fsSL https://agent-plugins.org/schemas/1.0.0/plugin.schema.json \
+            -o schemas/agent-plugins-1.0.0.plugin.schema.json
+      - run: pnpm generate
+      - name: Open a PR if anything drifted
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: chore/spec-drift
+          title: 'chore: sync vendored Ship24 OpenAPI spec'
+          commit-message: 'chore: sync vendored Ship24 OpenAPI spec'
+          labels: spec-drift
+          body: |
+            The canonical Ship24 OpenAPI spec (or the Agent Plugins schema) differs from the vendored copy.
+            Generated references were refreshed automatically.
+
+            Reviewer checklist:
+            - [ ] review the regenerated `skills/*/references/*.md` and `assets/*.json`
+            - [ ] update hand-written SKILL.md prose if endpoints, fields or limits changed
+            - [ ] check `data/*.json` against docs.ship24.com (statuses, error codes, rate limits are not in the spec)
+            - [ ] add a CHANGELOG entry
