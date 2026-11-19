@@ -7,15 +7,16 @@ Nothing needs to be cloned, built or run locally: the server is hosted by Ship24
 
 A Ship24 API key. It starts with `apik_`. If the user doesn't have one, they can create it in the
 Ship24 dashboard at https://dashboard.ship24.com/integrations/api-keys (in the side menu, Developers,
-then the API Keys tab). Suggest a dedicated
-key for AI tools so it can be revoked on its own.
+then the API Keys tab). Suggest a dedicated key for AI tools so it can be revoked on its own.
 
 Ask the user for the key before writing any configuration. Do not invent or guess one.
 
 ## Configuration
 
-Add this entry to the MCP settings file (for Cline, `cline_mcp_settings.json`), replacing
-`apik_your_key_here` with the user's key:
+Add this entry to the agent's own MCP settings file, replacing `apik_your_key_here` with the user's
+key. For Cline this is the global `cline_mcp_settings.json` that Cline manages (open it from the MCP
+Servers panel → Configure MCP Servers). Edit that existing file. Do not create a new
+`cline_mcp_settings.json` in the user's project or workspace folder: Cline won't read it there.
 
 ```json
 {
