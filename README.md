@@ -116,6 +116,27 @@ gemini extensions install https://github.com/ship24/ship24-ai-plugin
 
 The install prompts for the Ship24 API key setting and stores it for the `ship24-tracking` MCP server.
 
+### Cline
+
+Cline connects to the hosted MCP server; skills and the agent aren't installed. Ask Cline to set up the
+Ship24 MCP server from this repository and it will follow [`llms-install.md`](llms-install.md), or add this
+to `cline_mcp_settings.json` yourself:
+
+```json
+{
+  "mcpServers": {
+    "ship24-tracking": {
+      "type": "streamableHttp",
+      "url": "https://api.ship24.com/mcp",
+      "headers": { "Authorization": "Bearer <your key>" }
+    }
+  }
+}
+```
+
+Cline doesn't read `SHIP24_API_KEY` from the environment, so the key goes in the header directly. Keep
+`"type": "streamableHttp"`: without it Cline falls back to the legacy SSE transport and can't connect.
+
 ### Any tool that supports Agent Skills
 
 ```bash
