@@ -104,9 +104,15 @@ an HTTP MCP server; if the `ship24-tracking` tools answer `401`, add
 
 The repository follows the Agent Plugins 1.0 layout (`plugin.json`, `skills/`, `mcp.json`). In VS Code run
 **Chat: Install Plugin From Source** with the repository URL; with Copilot CLI run
-`copilot plugin install ship24/ship24-ai-plugin`. The portable format has no secret mechanism for HTTP headers,
-so the bundled `ship24-tracking` server lists its tools but every call answers `401`; to use the tools there,
-add the server to your own MCP configuration with the header `Authorization: Bearer <your key>`.
+`copilot plugin install ship24/ship24-ai-plugin`.
+
+The bundled `ship24-tracking` server sends the key from `SHIP24_API_KEY` (see [Your API key](#your-api-key)).
+Set the variable before starting VS Code, then close every VS Code window and reopen it, as VS Code only reads
+environment variables at launch. The MCP tools are available in Copilot Chat's **Agent** mode.
+
+If tracking calls answer `401`, VS Code most likely started before the variable was set, so restart it. If
+that doesn't help, add the server to your own MCP configuration with the header
+`Authorization: Bearer <your key>`.
 
 ### Gemini CLI
 
