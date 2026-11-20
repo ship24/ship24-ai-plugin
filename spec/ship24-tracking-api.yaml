@@ -793,6 +793,11 @@ components:
               maxLength: 100
               example: Marc
               description: "Recipient name. Used for email notifications and courier-restricted tracking data."
+            phone:
+              type: string
+              maxLength: 30
+              example: "+8612345678910"
+              description: "Recipient phone. Some couriers require it to return tracking data."
         settings:
           type: object
           properties:
@@ -1950,13 +1955,18 @@ paths:
                   example: "https://tools.usps.com/go/TrackConfirmAction?tLabels=9400115901047177598206"
                 recipient:
                   type: object
-                  description: "Information on the recipient. Only the `name` property can be updated, `email` is not patchable."
+                  description: "Information on the recipient. Only the `name` and `phone` properties can be updated, `email` is not patchable."
                   properties:
                     name:
                       type: string
                       maxLength: 100
                       example: Marc
                       description: "Recipient name. Used for email notifications and courier-restricted tracking data."
+                    phone:
+                      type: string
+                      maxLength: 30
+                      example: "+8612345678910"
+                      description: "Recipient phone. Some couriers require it to return tracking data."
             examples:
               Patching:
                 value:
@@ -1969,6 +1979,7 @@ paths:
                     - us-post
                   recipient:
                     name: Marc
+                    phone: "+8612345678910"
         description: "Only the following properties can be updated on a Tracker:"
       parameters:
         - name: Content-Type
@@ -2010,12 +2021,16 @@ paths:
                     properties:
                       recipient:
                         type: object
-                        description: "Information on the recipient. Only returned if a non-empty `recipient.name` was provided in the request."
+                        description: "Information on the recipient. Only returned if a non-empty `recipient.name` or `recipient.phone` was provided in the request."
                         properties:
                           name:
                             type: string
                             example: Marc
                             description: "Recipient name."
+                          phone:
+                            type: string
+                            example: "+8612345678910"
+                            description: "Recipient phone."
               examples:
                 Successfully updated:
                   value:
@@ -2030,6 +2045,7 @@ paths:
                         createdAt: "2021-03-10T05:13:00.000Z"
                         recipient:
                           name: Marc
+                          phone: "+8612345678910"
         "400":
           description: Bad Request
           content:
