@@ -310,7 +310,7 @@ This endpoint allows to modify an existing `Tracker` matching with the given `t
 | shippingDate | string (date-time) | no | Date at which the shipment has been shipped  - 📌 Recommended to improve tracking accuracy: providing the shipping date helps us accurately identify the shipment and improves our ability to retrieve the correct data. However, an inaccurate shipping date could cause our system to exclude the right shipment. Therefore, please ensure the provided shipping date aligns closely with the actual shipment date, give or take a few days. [Format](http://docs.ship24.com/data-format#logistics-date-and-time) |
 | courierName | string | no | Courier name and/or service. |
 | trackingUrl | string | no | Tracking URL of the courier. |
-| recipient | object | no | Information on the recipient. Only the `name` property can be updated, `email` is not patchable. |
+| recipient | object | no | Information on the recipient. Only the `name` and `phone` properties can be updated, `email` is not patchable. |
 
 ```json
 {
@@ -323,7 +323,8 @@ This endpoint allows to modify an existing `Tracker` matching with the given `t
     "us-post"
   ],
   "recipient": {
-    "name": "Marc"
+    "name": "Marc",
+    "phone": "+8612345678910"
   }
 }
 ```
